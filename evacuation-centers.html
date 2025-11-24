@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Evacuation Centers</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  h2 {
+    margin-bottom: 0.5em;
+  }
+  .section {
+    margin-bottom: 2em;
+  }
+  /* Header styles */
+  .header {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+  .header h1 {
+    font-size: 2em;
+    background: linear-gradient(to right, #007bff, rgba(0,123,255,0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #666;
+  }
+  /* Search box styles */
+  .search-box {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+  }
+  .search-input {
+    flex: 1;
+    padding: 0.75em 2em;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    position: relative;
+  }
+  .search-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    color: #999;
+  }
+  /* Info banner */
+  .info-banner {
+    display: flex;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    padding: 1em;
+    border-radius: 8px;
+    margin-bottom: 2em;
+  }
+  .info-icon {
+    font-size: 1.5em;
+    margin-right: 1em;
+    flex-shrink: 0;
+  }
+  .info-content {
+    max-width: 700px;
+  }
+  .info-content h4 {
+    margin: 0 0 0.5em 0;
+    color: #856404;
+  }
+  /* Center card styles */
+  .center-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1em;
+    border: 2px solid transparent;
+    margin-bottom: 1.5em;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .center-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1em;
+  }
+  .center-title {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25em 0.75em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 0.5em;
+  }
+  .status-available {
+    background-color: #28a745;
+    color: #fff;
+  }
+  .status-nearly-full {
+    background-color: #fd7e14;
+    color: #fff;
+  }
+  .status-full {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  .address {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #555;
+  }
+  .address span {
+    margin-left: 0.5em;
+  }
+  .distance-badge {
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 0.2em 0.5em;
+    font-size: 0.75em;
+    display: flex;
+    align-items: center;
+  }
+  .progress-container {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.5em;
+  }
+  .progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .progress-green {
+    background-color: #28a745;
+  }
+  .progress-orange {
+    background-color: #fd7e14;
+  }
+  .progress-red {
+    background-color: #dc3545;
+  }
+  /* Facilities badges */
+  .facilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-top: 0.75em;
+  }
+  .facility-badge {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 0.25em 0.75em;
+    font-size: 0.75em;
+  }
+  /* Buttons */
+  .button-group {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .btn {
+    padding: 0.75em 1.2em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    transition: all 0.2s;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #007bff;
+    color: #007bff;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .btn-destructive {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  /* Layout for the centers grid */
+  .centers-grid {
+    display: grid;
+    gap: 1em;
+  }
+  @media (min-width: 768px) {
+    .centers-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+  /* Floating button */
+  .floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.75em 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 50;
+    transition: background-color 0.2s;
+  }
+  .floating-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="section header">
+  <h1>Evacuation Centers</h1>
+  <p>Nearby safe locations and their current capacity</p>
+</div>
+
+<!-- Search Box -->
+<div class="search-box">
+  <div style="position:relative; flex:1;">
+    <div class="search-icon">🔍</div>
+    <input type="text" placeholder="Search by location or center name..." class="search-input" />
+  </div>
+  <button class="btn btn-primary" style="flex-shrink:0;">🚶 Use My Location</button>
+</div>
+
+<!-- Info Banner -->
+<div class="info-banner">
+  <div class="info-icon">ℹ️</div>
+  <div class="info-content">
+    <h4>Important Information</h4>
+    <p>Capacity updates are refreshed every 30 minutes. Please bring your own essentials including food, water, medicine, and personal items. Contact the center before traveling if possible.</p>
+  </div>
+</div>
+
+<!-- Evacuation centers list -->
+<div class="centers-grid">
+  <!-- Center 1 -->
+  <div class="center-card">
+    <div class="center-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5em;">
+          <div class="center-title">Marikina Sports Center</div>
+          <div class="status-badge status-available"><span style="margin-right:0.3em;">✅</span>Available</div>
+        </div>
+        <div class="address">📍<span>Shoe Avenue, Marikina City</span></div>
+      </div>
+      <div class="distance-badge"><span>🧭</span> 1.2 km</div>
+    </div>
+    <div style="margin-top:1em;">
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9em; margin-bottom:0.25em;">
+        <div style="display:flex; align-items:center; gap:0.5em;">👥 Capacity: 245 / 500</div>
+        <div style="color:#28a745;">49% occupied</div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar progress-green" style="width:49%;"></div>
+      </div>
+    </div>
+    <div class="facilities">
+      <div class="facility-badge">Medical Aid</div>
+      <div class="facility-badge">Food</div>
+      <div class="facility-badge">Sleeping Area</div>
+      <div class="facility-badge">Restrooms</div>
+    </div>
+    <div class="button-group">
+      <button class="btn btn-outline">📞 (02) 8646-1991</button>
+      <button class="btn btn-primary" style="flex:1;">🧭 Get Directions</button>
+    </div>
+  </div>
+
+  <!-- Center 2 -->
+  <div class="center-card">
+    <div class="center-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5em;">
+          <div class="center-title">Quezon City Hall Compound</div>
+          <div class="status-badge status-nearly-full"><span style="margin-right:0.3em;">⚠️</span>Nearly Full</div>
+        </div>
+        <div class="address">📍<span>Elliptical Road, Diliman, Quezon City</span></div>
+      </div>
+      <div class="distance-badge"><span>🧭</span> 3.5 km</div>
+    </div>
+    <div style="margin-top:1em;">
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9em; margin-bottom:0.25em;">
+        <div style="display:flex; align-items:center; gap:0.5em;">👥 Current: 820 / 1000</div>
+        <div style="color:#fd7e14;">82% occupied</div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar progress-orange" style="width:82%;"></div>
+      </div>
+    </div>
+    <div class="facilities">
+      <div class="facility-badge">Medical Aid</div>
+      <div class="facility-badge">Food</div>
+      <div class="facility-badge">Sleeping Area</div>
+      <div class="facility-badge">Restrooms</div>
+      <div class="facility-badge">Security</div>
+    </div>
+    <div class="button-group">
+      <button class="btn btn-outline">📞 (02) 8988-4242</button>
+      <button class="btn btn-primary" style="flex:1;">🧭 Get Directions</button>
+    </div>
+  </div>
+
+  <!-- New Center 3 -->
+  <div class="center-card">
+    <div class="center-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5em;">
+          <div class="center-title">Pasig City Hall Gym</div>
+          <div class="status-badge status-available"><span style="margin-right:0.3em;">✅</span>Available</div>
+        </div>
+        <div class="address">📍<span>Caruncho Street, Pasig City</span></div>
+      </div>
+      <div class="distance-badge"><span>🧭</span> 4.0 km</div>
+    </div>
+    <div style="margin-top:1em;">
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9em; margin-bottom:0.25em;">
+        <div>👥 Capacity: 150 / 300</div>
+        <div style="color:#28a745;">50% occupied</div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar progress-green" style="width:50%;"></div>
+      </div>
+    </div>
+    <div class="facilities">
+      <div class="facility-badge">Medical Aid</div>
+      <div class="facility-badge">Food</div>
+      <div class="facility-badge">Sleeping Area</div>
+    </div>
+    <div class="button-group">
+      <button class="btn btn-outline">📞 (02) 8675-1122</button>
+      <button class="btn btn-primary" style="flex:1;">🧭 Get Directions</button>
+    </div>
+  </div>
+
+  <!-- New Center 4 -->
+  <div class="center-card">
+    <div class="center-header">
+      <div>
+        <div style="display:flex; align-items:center; gap:0.5em;">
+          <div class="center-title">Mandaluyong Sports Complex</div>
+          <div class="status-badge status-nearly-full"><span style="margin-right:0.3em;">⚠️</span>Nearly Full</div>
+        </div>
+        <div class="address">📍<span>Gen. Kalentong St, Mandaluyong City</span></div>
+      </div>
+      <div class="distance-badge"><span>🧭</span> 5.2 km</div>
+    </div>
+    <div style="margin-top:1em;">
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9em; margin-bottom:0.25em;">
+        <div>👥 Current: 470 / 500</div>
+        <div style="color:#fd7e14;">94% occupied</div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar progress-orange" style="width:94%;"></div>
+      </div>
+    </div>
+    <div class="facilities">
+      <div class="facility-badge">Medical Aid</div>
+      <div class="facility-badge">Food</div>
+      <div class="facility-badge">Sleeping Area</div>
+      <div class="facility-badge">Restrooms</div>
+    </div>
+    <div class="button-group">
+      <button class="btn btn-outline">📞 (02) 8745-3345</button>
+      <button class="btn btn-primary" style="flex:1;">🧭 Get Directions</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Floating Go to Main Page Button -->
+<a href="index.html" class="floating-btn">Go to Main Page</a>
+
+</body>
+</html>

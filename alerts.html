@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flood Alerts</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom Styles -->
+<style>
+  @keyframes pulse {
+    0% { opacity: 0.05; }
+    100% { opacity: 0.1; }
+  }
+</style>
+
+</head>
+<body class="bg-gray-100 text-gray-700">
+
+<!-- Floating Button -->
+<a href="index.html" 
+class="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 z-50">
+  Go to Main Page
+</a>
+
+<div class="min-h-screen py-12">
+  <div class="container mx-auto px-4">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-3xl font-bold text-blue-500 mb-2">Real-Time Flood Alerts</h1>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Live monitoring of flood conditions, water levels, and emergency alerts from PAGASA and local authorities.
+      </p>
+    </div>
+
+    <!-- Page Layout -->
+    <div class="grid lg:grid-cols-3 gap-8">
+
+      <!-- Main Section -->
+      <div class="lg:col-span-2 space-y-8">
+
+        <!-- Map Placeholder -->
+        <div class="bg-gray-300 h-56 flex items-center justify-center rounded">
+          <em>Flood Map Placeholder</em>
+        </div>
+
+        <!-- Alerts Section -->
+        <div>
+          <h2 class="text-xl font-semibold">Active Flood Alerts</h2>
+          <p class="text-gray-500">Real-time flood warnings and updates</p>
+
+          <div class="mt-4 space-y-4">
+
+            <!-- CRITICAL ALERT -->
+            <div class="relative bg-white rounded shadow p-4 border-l-4 border-red-500">
+              <div class="absolute inset-0 bg-red-500 opacity-5 rounded animate-pulse"></div>
+
+              <div class="flex items-start gap-3 relative z-10">
+                <div class="text-xl">⚠️</div>
+                <h3 class="font-bold">Marikina City</h3>
+                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">CRITICAL</span>
+              </div>
+
+              <p class="text-gray-600 mt-2">
+                Marikina River water level has reached critical levels. Immediate evacuation required.
+              </p>
+
+              <div class="text-sm flex gap-4 mt-2">
+                <span>💧 Water Level: <strong>15.5m</strong></span>
+                <span class="text-gray-500">• 10 minutes ago</span>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span class="text-xs text-gray-500">Affected areas:</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Tumana</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Nangka</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Malanday</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Concepcion Uno</span>
+              </div>
+            </div>
+
+            <!-- HIGH ALERT -->
+            <div class="bg-white rounded shadow p-4 border-l-4 border-orange-500">
+              <div class="flex items-start gap-3">
+                <div class="text-xl">⚠️</div>
+                <h3 class="font-bold">Quezon City</h3>
+                <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">HIGH</span>
+              </div>
+
+              <p class="text-gray-600 mt-2">
+                Heavy rainfall causing flash floods in several barangays. Residents advised to prepare for evacuation.
+              </p>
+
+              <div class="text-sm flex gap-4 mt-2">
+                <span>💧 Water Level: <strong>12.3m</strong></span>
+                <span class="text-gray-500">• 25 minutes ago</span>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mt-2">
+                <span class="text-xs text-gray-500">Affected areas:</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Commonwealth</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Fairview</span>
+                <span class="bg-gray-100 rounded px-2 py-1 text-sm">📍 Batasan Hills</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="space-y-6">
+
+        <!-- Subscription Card -->
+        <div class="bg-gradient-to-br from-blue-500 to-blue-400 text-white p-6 rounded shadow">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="bg-white/20 w-12 h-12 flex items-center justify-center rounded-full text-2xl">🔔</div>
+            <h3 class="text-lg font-bold">Get Instant Alerts</h3>
+          </div>
+
+          <p>Subscribe to receive flood warnings directly to your phone or email.</p>
+
+          <div class="mt-4 space-y-2">
+            <label>Phone Number</label>
+            <input class="w-full p-2 bg-white/20 border border-white/30 rounded text-white" placeholder="+63 900 000 0000">
+
+            <label>Email Address</label>
+            <input class="w-full p-2 bg-white/20 border border-white/30 rounded text-white" placeholder="email@example.com">
+
+            <label>Your Location</label>
+            <input class="w-full p-2 bg-white/20 border border-white/30 rounded text-white" placeholder="Marikina City">
+
+            <button class="w-full bg-white text-blue-600 font-semibold rounded py-2 mt-3">
+              🔔 Subscribe to SMS Alerts
+            </button>
+
+            <button class="w-full border border-white rounded py-2 mt-2">
+              📧 Subscribe to Email Alerts
+            </button>
+          </div>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="text-blue-500 font-bold mb-3">Data Sources</h3>
+
+          <ul class="space-y-2 text-sm">
+            <li>🌧️ <strong>PAGASA</strong><br><span class="text-gray-500">Weather and flood forecasts</span></li>
+            <li>📡 <strong>River Monitoring</strong><br><span class="text-gray-500">Real-time water sensors</span></li>
+            <li>🏛️ <strong>Local DRRM</strong><br><span class="text-gray-500">Municipal disaster reports</span></li>
+            <li>👥 <strong>Community Reports</strong><br><span class="text-gray-500">Ground-level alerts</span></li>
+          </ul>
+        </div>
+
+        <!-- Live Update Info -->
+        <div class="bg-green-100 border border-green-300 p-4 rounded">
+          <h4 class="text-green-600 font-semibold mb-1">Live Updates</h4>
+          <p class="text-sm">Alerts refresh every 5 minutes. Map updates every 15 minutes.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
