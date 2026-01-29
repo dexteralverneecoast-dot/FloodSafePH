@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Brew & Bite Café</title>
+    <link rel="stylesheet" href="css/seller.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>☕ Seller Dashboard</h1>
+                <div class="header-actions">
+                    <button class="refresh-btn" onclick="refreshOrders()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <div class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <span id="notification-count" class="notification-badge">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-container">
+            <div class="stat-card pending">
+                <div class="stat-number" id="stat-pending">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card ready">
+                <div class="stat-number" id="stat-ready">0</div>
+                <div class="stat-label">Ready</div>
+            </div>
+            <div class="stat-card completed">
+                <div class="stat-number" id="stat-completed">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterOrders('pending')">Pending Orders</button>
+            <button class="tab-btn" onclick="filterOrders('ready')">Ready</button>
+            <button class="tab-btn" onclick="filterOrders('all')">All Orders</button>
+        </div>
+
+        <!-- Orders List -->
+        <div id="orders-container" class="orders-container">
+            <!-- Orders will be loaded here dynamically -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <i class="fas fa-coffee"></i>
+            <p>No orders yet</p>
+        </div>
+    </div>
+
+    <!-- Audio notification -->
+    <audio id="notification-sound" preload="auto">
+        <source src="assets/notification.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="js/seller.js"></script>
+</body>
+</html>
